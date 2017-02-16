@@ -4,20 +4,19 @@
   
     
     <entry>
-      <title><![CDATA[web_localcache]]></title>
+      <title><![CDATA[详解HTML中cookies,localStorage,sessionStorage]]></title>
       <url>http://yoursite.com/2017/02/09/web-localcache/</url>
       <content type="html"><![CDATA[<p>浏览器中的提供的几种方式来存储一些临时的信息，每种的存储方式都有器特点以及的缺点。本文将介绍三者之间差别以及会演示一些基本的用法。</p>
 <p>浏览器的中提供的用来存储本地缓存的方式：</p>
 <ol>
 <li>cookies</li>
 <li>localStorage</li>
-<li><p>sessionStorage</p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h3><p> cookies，在中文又称为<code>小甜饼</code>，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开发者可以设置cookies的过期时间。一般在使用网站时有记住密码的功能时就是使用cookie进行存储。</p>
-<h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p> localstorage，是HTML5标准中的提出的一个技术，它将数据存储在用户本地计算机，浏览器通过一系列的协议和方法进行存储，这些数据可以在用户计算机上持久保存，即使用户重新打开浏览器这些数据也还是存在的。数据在存储时通过协议、主机和端口来进行身份验证。目前大部分主流浏览器都是支持lcoalstorage的。</p>
-<h3 id="SessionStorage"><a href="#SessionStorage" class="headerlink" title="SessionStorage"></a>SessionStorage</h3><p> sessionStorage， 它与localStorage相似，但是在使用范围和生命周期不同，sessionStorage在浏览器关闭之后会清除数据，一个用处就是：sessionStorage是为了更好的区分同一浏览器不同tab访问同一个浏览器是不会妨碍彼此的访问而设置的，而这是cookies所不能做到的。</p>
-<h2 id="浏览器兼容特性"><a href="#浏览器兼容特性" class="headerlink" title="浏览器兼容特性"></a>浏览器兼容特性</h2></li>
+<li>sessionStorage</li>
 </ol>
-<table>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h3><pre><code>cookies，在中文又称为`小甜饼`，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开发者可以设置cookies的过期时间。一般在使用网站时有记住密码的功能时就是使用cookie进行存储。
+</code></pre><h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><pre><code>localstorage，是HTML5标准中的提出的一个新技术，他的前身是userData,它将数据存储在用户本地计算机，浏览器通过一系列的协议和方法进行读写，这些数据可以在用户计算机上持久保存，即使用户重新打开浏览器这些数据也还是存在的。数据在存储时通过协议、主机和端口来进行身份验证。目前大部分主流浏览器都是支持lcoalstorage的。
+</code></pre><h3 id="SessionStorage"><a href="#SessionStorage" class="headerlink" title="SessionStorage"></a>SessionStorage</h3><pre><code>sessionStorage， 它与localStorage相似，但是在使用范围和生命周期不同，sessionStorage在浏览器关闭之后会清除数据，一个用处就是：sessionStorage是为了更好的区分同一浏览器不同tab访问同一个浏览器是不会妨碍彼此的访问而设置的，而这是cookies所不能做到的。
+</code></pre><h2 id="浏览器兼容特性"><a href="#浏览器兼容特性" class="headerlink" title="浏览器兼容特性"></a>浏览器兼容特性</h2><table>
 <thead>
 <tr>
 <th>特性</th>
@@ -83,10 +82,33 @@
 </tr>
 </tbody>
 </table>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank" rel="external">http cookie</a></p>
-<p><a href="https://en.wikipedia.org/wiki/Web_storage" target="_blank" rel="external">webstorage</a></p>
-<p><a href="http://jerryzou.com/posts/cookie-and-web-storage/" target="_blank" rel="external">详说 Cookie, LocalStorage 与 SessionStorage</a></p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">Window.localStorage</a></p>
+<h2 id="使用用法"><a href="#使用用法" class="headerlink" title="使用用法"></a>使用用法</h2><h3 id="javascript操作cookie"><a href="#javascript操作cookie" class="headerlink" title="javascript操作cookie"></a>javascript操作cookie</h3><pre><code>在javascript中可以通过document.cookie来读取cookie的内容或设置cookie，同时，有时cookies在客户端与服务端之间进行通信，因此，在服务端，同样有着可以对cookie进行操作带的相关工具
+</code></pre><ul>
+<li>cookie的类型：<code>字符串</code><br>  alert(typeof document.cookie) # string</li>
+<li>cookies是有域和路径这个概念，不同域只能访问自己的cookie，这个会在后面介绍</li>
+<li>cookie的创建和定义变量的方式相似，都是通过使用cookie键值，一个cookies可以存储多个cookie</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置cookie</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setCookie</span>(<span class="params">arg_name, arg_value</span>)</span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="built_in">document</span>.cookie.length &gt; <span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">document</span>.cookie = arg_name + <span class="string">'='</span> + arg_value;</div><div class="line">		&#125;</div><div class="line">&#125;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">getCookie</span>(<span class="params">arg_name</span>)</span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="built_in">document</span>.cookie.length &gt; <span class="number">0</span>)&#123;</div><div class="line">		c_start=<span class="built_in">document</span>.cookie.indexOf(arg_name + <span class="string">"="</span>)</div><div class="line">			<span class="keyword">if</span> c_start != <span class="number">-1</span>)&#123;</div><div class="line">				c_end=<span class="built_in">document</span>.cookie.indexOf(<span class="string">";"</span>,c_start)</div><div class="line">					<span class="keyword">if</span> (c_end==<span class="number">-1</span>) c_end=<span class="built_in">document</span>.cookie.length　　</div><div class="line">						<span class="keyword">return</span> <span class="built_in">unescape</span>(<span class="built_in">document</span>.cookie.substring(c_start,c_end))</div><div class="line">			&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="string">''</span></div><div class="line">&#125;</div><div class="line">   </div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">setCookiesExpires</span>(<span class="params">arg_vale, arg_value</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> exdate=<span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">	exdate.setDate(exdate.getDate()+expiredays)</div><div class="line">	<span class="built_in">document</span>.cookie = arg_vale + <span class="string">"="</span> + <span class="built_in">escape</span>(arg_value) + ((expiredays == <span class="literal">null</span>) ? <span class="string">""</span> : <span class="string">";expires="</span> + exdate.toGMTString())</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="cookie域与路径问题"><a href="#cookie域与路径问题" class="headerlink" title="cookie域与路径问题"></a>cookie域与路径问题</h4><ul>
+<li>路径</li>
+</ul>
+<p>路径就代表着cookies存储的路径，一般来说，不同页面创建的cookies是不能互相之间访问，因为他们有路径，如：<br>    <code>一般来说https://www.baidu.com创建的cookies是不能被www.google.com.hk的页面访问，但如果将path设置到根目录，就能访问</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.cookie = <span class="string">"name=Darren;path=/"</span></div></pre></td></tr></table></figure>
+<p>此时，任何都可以访问</p>
+<ul>
+<li><p>域</p>
+<p>  路径能解决在同一个域下访问 cookie 的问题，咱们接着说 cookie 实现同域之间访问的问题。语法如下</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">document</span>.cookie = <span class="string">"name=value;path=path;domain=domain"</span></div></pre></td></tr></table></figure>
+<p>  值domain就是cookie中域的值<br>  举个栗子：</p>
+<pre><code>`www.baidu.com`和`news.baidu.com`共用一个关联域名`baidu.com`，如果想让这两个域名都能访问得到cookie，则需要设置cookie的domain属性，并且把path设置为`/`
+</code></pre></li>
+</ul>
+<h4 id="cookies-安全性"><a href="#cookies-安全性" class="headerlink" title="cookies 安全性"></a>cookies 安全性</h4><p>为了使用传输的cookies几时被截获也不会很容易被读取，所以需要将cookie进行一定程度的加密cookie可以添加<code>secure</code>属性<code>document.cookie = &quot;username=Darren;secure&quot;</code>，这样保证了传输时的数据加密，但在本地是没有加密的，方便读取。即使你设置了<code>secure</code>也不能保证别人不会查看你的cookie数据，关键还是不要把敏感信息放在cookie中</p>
+<h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>cookies中不能使用分号，逗号等特殊符号，因此当我们得cookie值中包含以上的字符时，则需要将cookie值进行设置，使用<code>escape()</code>，解析的时候使用<code>unescape()</code></p>
+<h3 id="javascript操作LocalStorage以及SessionStorage"><a href="#javascript操作LocalStorage以及SessionStorage" class="headerlink" title="javascript操作LocalStorage以及SessionStorage"></a>javascript操作LocalStorage以及SessionStorage</h3><p>LocalStorage和SessionStorage对象存储的方式都是都是键值对的方式存储，但是同样的LocalStorage和SessionStorage都不要存储敏感数据，而且在获取数据时，需要对数据进行校验。<br>LocalStorage的对象以及SessionStorage对象可以通过以下方式进行获取：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取localStorage对象</span></div><div class="line"><span class="keyword">var</span> g_localStorage = <span class="built_in">window</span>.localStorage || localStorage</div><div class="line"><span class="comment">// 获取SessionStorage对象</span></div><div class="line"><span class="keyword">var</span> g_sessionStorage = <span class="built_in">window</span>.sessionStorage || sessionStorage</div><div class="line">																				        </div><div class="line"><span class="comment">// 两者的用法相似，一次这里离就偷个懒，就只写出的localStorage的操作方法</span></div><div class="line"><span class="comment">// 设置localStorage</span></div><div class="line">g_localStorage.setItem(<span class="string">'name'</span>, <span class="string">'wei'</span>)</div><div class="line"><span class="comment">// 获取key获取localStorage对应的值</span></div><div class="line"><span class="built_in">console</span>.log(g_localStorage.getItem(<span class="string">'name'</span>))</div><div class="line"><span class="comment">// 删除数据项</span></div><div class="line">g_sessionStorage.removeItem(<span class="string">'name'</span>);</div><div class="line"><span class="comment">// 清除LocalStorage对象</span></div><div class="line">g_localStorage.clear()</div></pre></td></tr></table></figure>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>cookies,localStorage,sessionStorage都是为了让用户有更好的使用体验和让开发者有更好的方式，但这些存储方式，都不适合存储敏感数据，而且客户端以及服务端需要对数据进行严格的校验，以防出现潜在的攻击方式。但是，说到底，没有永远的安全，web的安全需要不断的提升。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank" rel="external">http cookie</a><br><a href="https://en.wikipedia.org/wiki/Web_storage" target="_blank" rel="external">webstorage</a><br><a href="http://jerryzou.com/posts/cookie-and-web-storage/" target="_blank" rel="external">详说 Cookie, LocalStorage 与 SessionStorage</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">Window.localStorage</a><br><a href="http://www.cnblogs.com/Darren_code/archive/2011/11/24/Cookie.html" target="_blank" rel="external">JavaScript操作cookie</a></p>
 ]]></content>
     </entry>
     
