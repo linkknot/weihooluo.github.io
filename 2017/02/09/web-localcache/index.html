@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="HTML5,localStorage,coookies,sessionStorage," />
+  <meta name="keywords" content="HTML5,coookies,localStorage,sessionStorage," />
 
 
 
@@ -91,7 +91,7 @@ cookies
 localStorage
 sessionStorage
 
-基本概念cookiescookies，在中文又称为`小甜饼`，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上">
+基本概念cookiescookies，在中文又称为小甜饼，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开">
 <meta property="og:type" content="article">
 <meta property="og:title" content="详解HTML中cookies,localStorage,sessionStorage">
 <meta property="og:url" content="http://yoursite.com/2017/02/09/web-localcache/index.html">
@@ -103,8 +103,8 @@ cookies
 localStorage
 sessionStorage
 
-基本概念cookiescookies，在中文又称为`小甜饼`，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上">
-<meta property="og:updated_time" content="2017-02-16T01:56:52.000Z">
+基本概念cookiescookies，在中文又称为小甜饼，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开">
+<meta property="og:updated_time" content="2017-02-17T09:39:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解HTML中cookies,localStorage,sessionStorage">
 <meta name="twitter:description" content="浏览器中的提供的几种方式来存储一些临时的信息，每种的存储方式都有器特点以及的缺点。本文将介绍三者之间差别以及会演示一些基本的用法。
@@ -114,7 +114,7 @@ cookies
 localStorage
 sessionStorage
 
-基本概念cookiescookies，在中文又称为`小甜饼`，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上">
+基本概念cookiescookies，在中文又称为小甜饼，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开">
 
 
 
@@ -400,10 +400,10 @@ sessionStorage
 <li>localStorage</li>
 <li>sessionStorage</li>
 </ol>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h3><pre><code>cookies，在中文又称为`小甜饼`，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开发者可以设置cookies的过期时间。一般在使用网站时有记住密码的功能时就是使用cookie进行存储。
-</code></pre><h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><pre><code>localstorage，是HTML5标准中的提出的一个新技术，他的前身是userData,它将数据存储在用户本地计算机，浏览器通过一系列的协议和方法进行读写，这些数据可以在用户计算机上持久保存，即使用户重新打开浏览器这些数据也还是存在的。数据在存储时通过协议、主机和端口来进行身份验证。目前大部分主流浏览器都是支持lcoalstorage的。
-</code></pre><h3 id="SessionStorage"><a href="#SessionStorage" class="headerlink" title="SessionStorage"></a>SessionStorage</h3><pre><code>sessionStorage， 它与localStorage相似，但是在使用范围和生命周期不同，sessionStorage在浏览器关闭之后会清除数据，一个用处就是：sessionStorage是为了更好的区分同一浏览器不同tab访问同一个浏览器是不会妨碍彼此的访问而设置的，而这是cookies所不能做到的。
-</code></pre><h2 id="浏览器兼容特性"><a href="#浏览器兼容特性" class="headerlink" title="浏览器兼容特性"></a>浏览器兼容特性</h2><table>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h3><p>cookies，在中文又称为<code>小甜饼</code>，是某些网站为了对用户进行身份识别而存储在浏览器本地的小块数据，并且在网络传输时会一并带上，开发者可以设置cookies的过期时间。一般在使用网站时有记住密码的功能时就是使用cookie进行存储。</p>
+<h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p>localstorage，是HTML5标准中的提出的一个新技术，他的前身是userData,它将数据存储在用户本地计算机，浏览器通过一系列的协议和方法进行读写，这些数据可以在用户计算机上持久保存，即使用户重新打开浏览器这些数据也还是存在的。数据在存储时通过协议、主机和端口来进行身份验证。目前大部分主流浏览器都是支持lcoalstorage的。</p>
+<h3 id="SessionStorage"><a href="#SessionStorage" class="headerlink" title="SessionStorage"></a>SessionStorage</h3><p>sessionStorage， 它与localStorage相似，但是在使用范围和生命周期不同，sessionStorage在浏览器关闭之后会清除数据，一个用处就是：sessionStorage是为了更好的区分同一浏览器不同tab访问同一个浏览器是不会妨碍彼此的访问而设置的，而这是cookies所不能做到的。</p>
+<h2 id="浏览器兼容特性"><a href="#浏览器兼容特性" class="headerlink" title="浏览器兼容特性"></a>浏览器兼容特性</h2><table>
 <thead>
 <tr>
 <th>特性</th>
@@ -469,8 +469,8 @@ sessionStorage
 </tr>
 </tbody>
 </table>
-<h2 id="使用用法"><a href="#使用用法" class="headerlink" title="使用用法"></a>使用用法</h2><h3 id="javascript操作cookie"><a href="#javascript操作cookie" class="headerlink" title="javascript操作cookie"></a>javascript操作cookie</h3><pre><code>在javascript中可以通过document.cookie来读取cookie的内容或设置cookie，同时，有时cookies在客户端与服务端之间进行通信，因此，在服务端，同样有着可以对cookie进行操作带的相关工具
-</code></pre><ul>
+<h2 id="使用用法"><a href="#使用用法" class="headerlink" title="使用用法"></a>使用用法</h2><h3 id="javascript操作cookie"><a href="#javascript操作cookie" class="headerlink" title="javascript操作cookie"></a>javascript操作cookie</h3><p>在javascript中可以通过document.cookie来读取cookie的内容或设置cookie，同时，有时cookies在客户端与服务端之间进行通信，因此，在服务端，同样有着可以对cookie进行操作带的相关工具</p>
+<ul>
 <li>cookie的类型：<code>字符串</code><br>alert(typeof document.cookie) # string</li>
 <li>cookies是有域和路径这个概念，不同域只能访问自己的cookie，这个会在后面介绍</li>
 <li>cookie的创建和定义变量的方式相似，都是通过使用cookie键值，一个cookies可以存储多个cookie</li>
@@ -521,9 +521,9 @@ sessionStorage
           
             <a href="/tags/HTML5/" rel="tag"># HTML5</a>
           
-            <a href="/tags/localStorage/" rel="tag"># localStorage</a>
-          
             <a href="/tags/coookies/" rel="tag"># coookies</a>
+          
+            <a href="/tags/localStorage/" rel="tag"># localStorage</a>
           
             <a href="/tags/sessionStorage/" rel="tag"># sessionStorage</a>
           
@@ -543,6 +543,10 @@ sessionStorage
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/23/python-input-output/" rel="prev" title="python的输入输出">
+                python的输入输出 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -610,7 +614,7 @@ sessionStorage
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
