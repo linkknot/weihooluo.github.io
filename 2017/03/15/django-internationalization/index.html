@@ -1,0 +1,877 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Django,Python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://ok5rwmeeb.bkt.clouddn.com/image/blog/favicon.png?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Django web 应用国际化​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。
+​    什么是国际化和本地化呢？敲黑板！！！
+​    国际化就是修改软件使之能够适应目标市场的语言，地区差异以及技术的需要。国际化是将系统的逻辑与特定语言以及地区脱钩，使得系统在迁移到不同语言或地区时不需要改动系统内部逻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django实现国际化">
+<meta property="og:url" content="http://yoursite.com/2017/03/15/django-internationalization/index.html">
+<meta property="og:site_name" content="起个名字好难">
+<meta property="og:description" content="Django web 应用国际化​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。
+​    什么是国际化和本地化呢？敲黑板！！！
+​    国际化就是修改软件使之能够适应目标市场的语言，地区差异以及技术的需要。国际化是将系统的逻辑与特定语言以及地区脱钩，使得系统在迁移到不同语言或地区时不需要改动系统内部逻">
+<meta property="og:updated_time" content="2017-03-21T08:20:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django实现国际化">
+<meta name="twitter:description" content="Django web 应用国际化​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。
+​    什么是国际化和本地化呢？敲黑板！！！
+​    国际化就是修改软件使之能够适应目标市场的语言，地区差异以及技术的需要。国际化是将系统的逻辑与特定语言以及地区脱钩，使得系统在迁移到不同语言或地区时不需要改动系统内部逻">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/15/django-internationalization/"/>
+
+
+
+
+
+  <title> Django实现国际化 | 起个名字好难 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-92953938-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">起个名字好难</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">路漫修长|且行且珍惜</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/15/django-internationalization/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="willLuo">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="起个名字好难">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="起个名字好难" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Django实现国际化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T10:21:39+08:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Django-web-应用国际化"><a href="#Django-web-应用国际化" class="headerlink" title="Django web 应用国际化"></a>Django web 应用国际化</h2><p>​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。</p>
+<p>​    什么是国际化和本地化呢？敲黑板！！！</p>
+<p>​    <strong>国际化</strong>就是修改软件使之能够适应目标市场的语言，地区差异以及技术的需要。国际化是将系统的逻辑与特定语言以及地区脱钩，使得系统在迁移到不同语言或地区时不需要改动系统内部逻辑。</p>
+<p>​    <strong>本地化</strong>是指系统前遇到不同语言或地区时，添加特定信息以及翻译的过程。</p>
+<h3 id="实现国际化"><a href="#实现国际化" class="headerlink" title="实现国际化"></a>实现国际化</h3><p>为了使系统能够提供给外国用户，原有的系统就需要进行国际化。实现了国际化后，系统能够更好的为不同类型的用户提供服务。按照以下几步就能让你web应用实现国际化，以及配置本地化：</p>
+<ol>
+<li>修改setting.py</li>
+<li>安装的所需的包</li>
+<li>国际化（template/view/javascript）</li>
+<li>本地化</li>
+</ol>
+<h3 id="修改setting-py"><a href="#修改setting-py" class="headerlink" title="修改setting.py"></a>修改setting.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># setting.py</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext_lazy <span class="keyword">as</span> _</div><div class="line"></div><div class="line">I18N = <span class="keyword">True</span>  <span class="comment"># setting 中有默认设置</span></div><div class="line"></div><div class="line">I10N = <span class="keyword">True</span>  <span class="comment"># setting 中有默认设置</span></div><div class="line"></div><div class="line">LANGUAGE_CODE = <span class="string">'zh-hans'</span>  <span class="comment"># 设置默语言</span></div><div class="line"></div><div class="line">BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) <span class="comment"># 获取当前项目的绝对路径</span></div><div class="line"></div><div class="line">LOCALE_PATHS = [  <span class="comment"># EACH APP NEED TO ADD PATH TO THIS PARAM</span></div><div class="line">    os.path.join(BASE_DIR, <span class="string">'$&#123;app_name&#125;'</span>, <span class="string">'locale'</span>),</div><div class="line">    ...</div><div class="line">] <span class="comment"># 本地化的与配置目录后面会讲到如何使用</span></div><div class="line"><span class="comment"># AVALIABLE LANGUAGE </span></div><div class="line">LANGUAGES = [</div><div class="line">    (<span class="string">'zh-hans'</span>, _(<span class="string">u'简体中文'</span>)),</div><div class="line">    (<span class="string">'id'</span>, _(<span class="string">u'印尼语'</span>)),</div><div class="line">] <span class="comment"># 在这里_()是对ugettext_lazy函数的别名函数，ugettext_lazy的用法是的对Unicode编码的字符串进行延迟翻译，只在使用的时候才会进行翻译</span></div><div class="line"></div><div class="line">MIDDLEWARE = [ <span class="comment"># 除了原使用使用的中间件，添加一下三个中间件，要按照以下的顺序</span></div><div class="line">    ...,</div><div class="line">   <span class="string">'django.contrib.sessions.middleware.SessionMiddleware'</span>,</div><div class="line">   <span class="string">'django.middleware.locale.LocaleMiddleware'</span>,</div><div class="line">   <span class="string">'django.middleware.common.CommonMiddleware'</span>,</div><div class="line">]</div></pre></td></tr></table></figure>
+<h3 id="安装的所需的包"><a href="#安装的所需的包" class="headerlink" title="安装的所需的包"></a>安装的所需的包</h3><p>由于django的中是使用GNU的gettext进行翻译，具体的工作机制的怎样的暂无了解，安利一个包管理<a href="[https://brew.sh/index_zh-cn.html">home brew</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># MacOS </span></div><div class="line"><span class="comment"># brew 是一个在Mac上一个套件管理器，用起来的十分方便类似于 ubuntu 中的apt-get</span></div><div class="line">brew install gettext <span class="comment"># install package</span></div><div class="line">brew link --force gettext <span class="comment"># 由于系统也有一个gettext的库，所以需要强制连接</span></div><div class="line">brew unlink gettext <span class="comment"># 当你不使用时可以解除连接</span></div></pre></td></tr></table></figure>
+<h3 id="国际化"><a href="#国际化" class="headerlink" title="国际化"></a>国际化</h3><p>django中的国际化的支持分为</p>
+<ol>
+<li><code>in Python code</code>也就是django文件结构中app下的view.py,</li>
+<li><code>in template code</code>template中html文件</li>
+<li><code>in javascript code</code>，静态文件中的javascript文件，</li>
+<li><code>url pattern</code>，在url中使用</li>
+</ol>
+<h4 id="在python代码上的使用"><a href="#在python代码上的使用" class="headerlink" title="在python代码上的使用"></a>在python代码上的使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 会使用的四个函数</div><div class="line">1. gettext()  # 用于翻译UTF-8的字符串</div><div class="line">2. gettext_lazy()  # 用于不需即时翻译UTF-8的字符串</div><div class="line">3. ugettext()  # 用于翻译unicode的字符串</div><div class="line">4. ugettext_lazy()  # 用于不需即时翻译unicode的字符串</div></pre></td></tr></table></figure>
+<p>一般使用ugettext()，并且其中的字符串使用Unicode编码字符串，有Unicode字符串相较于string字符串能表达更多的字符，详细后续写一篇来说明一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext <span class="keyword">as</span> _</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">function_name</span><span class="params">()</span>:</span></div><div class="line">    maker = _(<span class="string">'this is the maker.'</span>) <span class="comment">#  这仅仅是国际化的一部分，这个字符串表明要翻译的id,是唯一标识</span></div></pre></td></tr></table></figure>
+<p>详细参考<a href="https://docs.djangoproject.com/en/1.10/topics/i18n/translation/#internationalization-in-python-code" target="_blank" rel="external">点我点我</a></p>
+<h4 id="在模板代码上的使用"><a href="#在模板代码上的使用" class="headerlink" title="在模板代码上的使用"></a>在模板代码上的使用</h4><p>在模板层的应用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;load i18n&#125; &#123;# 为了让tmplate可以使用翻译的tag#&#125;</div><div class="line"></div><div class="line">&#123;% trans "starting point" as start %&#125; &#123;# 将starting point 的翻译放入 start变量 #&#125;</div><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>&#123;&#123; start &#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这里有一个要注意的，上面的用法只能在一个block钟有效，例子如以下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&#123;# 正确的用法 #&#125;</div><div class="line">&#123;% block mainbody %&#125;</div><div class="line">	&#123;% trans 'Thank you' as thankword %&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center-wrapper welcome-container"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"cover-heading"</span>&gt;</span>&#123;% trans "Oops..." %&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"cover-heading"</span>&gt;</span>&#123;&#123; thankword &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">&#123;% endblock %&#125;</div><div class="line">&#123;# 错误用法 这样在bolck块中是无法读取thankword值的 #&#125;</div><div class="line"></div><div class="line">&#123;% trans 'Thank you' as thankword %&#125;</div><div class="line">&#123;% block mainbody %&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center-wrapper welcome-container"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"cover-heading"</span>&gt;</span>&#123;% trans "Oops..." %&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"cover-heading"</span>&gt;</span>&#123;&#123; thankword &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">&#123;% endblock %&#125;</div></pre></td></tr></table></figure>
+<p>详细参考<a href="https://docs.djangoproject.com/en/1.10/topics/i18n/translation/#internationalization-in-template-code" target="_blank" rel="external">点我点我</a></p>
+<h4 id="在javascript上的使用"><a href="#在javascript上的使用" class="headerlink" title="在javascript上的使用"></a>在javascript上的使用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># urls.py</span></div><div class="line">js_info_dict = &#123;</div><div class="line">    <span class="string">'packages'</span>: (<span class="string">'testapp'</span>,),</div><div class="line">&#125;</div><div class="line">url(<span class="string">r'^i18n\.js$'</span>, javascript_catalog, js_info_dict, name=<span class="string">'testapp-javascript-i18n'</span>),</div></pre></td></tr></table></figure>
+<p>在html中添加js国际化组件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"&#123;% url 'testapp-javascript-i18n' %&#125;"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在js中的用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> trans_str = django.gettext(<span class="string">'trans string'</span>)</div></pre></td></tr></table></figure>
+<p>详细参考<a href="https://docs.djangoproject.com/en/1.10/topics/i18n/translation/#internationalization-in-javascript-code" target="_blank" rel="external">点我点我</a></p>
+<h4 id="在url上使用"><a href="#在url上使用" class="headerlink" title="在url上使用"></a>在url上使用</h4><p>为了能够在更换url时能带上语言信息，方便进行语言更换，所以我们使用的url的翻译</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># project.urls.py</span></div><div class="line"><span class="keyword">from</span> django.conf.urls.i18n <span class="keyword">import</span> i18n_patterns</div><div class="line">urlpatterns += i18n_patterns(</div><div class="line">    url(<span class="string">r'^testurlname/'</span>, include(<span class="string">'testapp.urls'</span>)),</div><div class="line">)</div><div class="line"><span class="comment"># 通过这样的设置可以在url前添加语言代码</span></div><div class="line"><span class="comment"># 如：zh-cn/testurlname/...</span></div><div class="line"><span class="comment">#    id/testurlname/...</span></div><div class="line"><span class="comment"># 也可以对url进行翻译,根据不同语言使用不同的url，详细在本地化环节</span></div><div class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext_lazy <span class="keyword">as</span> _</div><div class="line">urlpatterns += i18n_patterns(</div><div class="line">    url(_(<span class="string">r'^testurlname/'</span>), include(<span class="string">'testapp.urls'</span>)),</div><div class="line">)</div></pre></td></tr></table></figure>
+<h3 id="本地化"><a href="#本地化" class="headerlink" title="本地化"></a>本地化</h3><p>本地就是将我们设置需要的翻译的文本全部汇总到一个文件，然后进行翻译本地化操作的过程</p>
+<p>现有以下python代码，template代码，javascript代码，url进行翻译</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># python code testapp.view.py</span></div><div class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext <span class="keyword">as</span> _</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></div><div class="line">    sentence = <span class="string">'Welcome to my site.'</span></div><div class="line">    output = _(sentence)</div><div class="line">    <span class="keyword">return</span> HttpResponse(output)</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;# template code index.html#&#125;</div><div class="line">&#123;% load i18n %&#125;</div><div class="line">&#123;% block mainbody %&#125;</div><div class="line">	&#123;% trans 'trans string' %&#125;</div><div class="line">&#123;% endbolck %&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// javascript code index.js</span></div><div class="line"><span class="keyword">var</span> trans_str = django.gettext(<span class="string">'trans string'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># urls.py</span></div><div class="line">urlpatterns += i18n_patterns(</div><div class="line">    url(_(<span class="string">r'^testurlname/'</span>), include(<span class="string">'testapp.urls'</span>)),</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>在有以上的需要翻译的文本后</p>
+<p>我们需要执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py makemessages -l zh_hans</div></pre></td></tr></table></figure>
+<p>执行命令之后django就会根据setting.py中<code>LOCALE_PATHS</code>生成本地化文件django.po，或许会问为什么语言代码不是应该是<code>zh-hans</code>吗？为什这里就变成了<code>zh_hans</code>。对！！！你猜对了，这是一个坑，就是django中的本地化文件不能使用<code>-</code>，所以要使用<code>_</code>来替代<code>-</code>,</p>
+<p>这里会生成两个po文件，一个是<code>django.po</code>，一个是<code>djangojs.po</code>，文件路径<code>${LOCALE_PATHS}/locale/zh_hans/django.po</code>,<code>${LOCALE_PATHS}/locale/zh_hans/djangojs.po</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># django.po</div><div class="line"># SOME DESCRIPTIVE TITLE.</div><div class="line"># Copyright (C) YEAR THE PACKAGE&apos;S COPYRIGHT HOLDER</div><div class="line"># This file is distributed under the same license as the PACKAGE package.</div><div class="line"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</div><div class="line">#</div><div class="line">msgid &quot;&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line">&quot;Project-Id-Version: Medusa\n&quot;</div><div class="line">&quot;Report-Msgid-Bugs-To: \n&quot;</div><div class="line">&quot;POT-Creation-Date: 2017-03-17 18:38+0800\n&quot;</div><div class="line">&quot;PO-Revision-Date: 2017-03-17 17:47+0800\n&quot;</div><div class="line">&quot;Last-Translator: \n&quot;</div><div class="line">&quot;Language-Team: \n&quot;</div><div class="line">&quot;Language: zh_CN\n&quot;</div><div class="line">&quot;MIME-Version: 1.0\n&quot;</div><div class="line">&quot;Content-Type: text/plain; charset=UTF-8\n&quot;</div><div class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</div><div class="line">&quot;Plural-Forms: nplurals=1; plural=0;\n&quot;</div><div class="line">&quot;X-Generator: Poedit 1.8.12\n&quot;</div><div class="line"></div><div class="line">#: testapp.view.py:3</div><div class="line">msgid &quot;Welcome to my site.&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line"></div><div class="line">#: index.html:3</div><div class="line">msgid: &quot;trans string&quot;</div><div class="line">msgstr: &quot;&quot;</div><div class="line"></div><div class="line">#: url.py:3</div><div class="line">msgid: &quot;r&apos;^testurlname/&apos;&quot;</div><div class="line">msgstr: &quot;&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># djangojs.po</div><div class="line"># SOME DESCRIPTIVE TITLE.</div><div class="line"># Copyright (C) YEAR THE PACKAGE&apos;S COPYRIGHT HOLDER</div><div class="line"># This file is distributed under the same license as the PACKAGE package.</div><div class="line"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</div><div class="line">#</div><div class="line">#, fuzzy</div><div class="line">msgid &quot;&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line">&quot;Project-Id-Version: PACKAGE VERSION\n&quot;</div><div class="line">&quot;Report-Msgid-Bugs-To: \n&quot;</div><div class="line">&quot;POT-Creation-Date: 2017-03-17 15:39+0800\n&quot;</div><div class="line">&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n&quot;</div><div class="line">&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n&quot;</div><div class="line">&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;\n&quot;</div><div class="line">&quot;Language: \n&quot;</div><div class="line">&quot;MIME-Version: 1.0\n&quot;</div><div class="line">&quot;Content-Type: text/plain; charset=UTF-8\n&quot;</div><div class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</div><div class="line">&quot;Plural-Forms: nplurals=1; plural=0;\n&quot;</div><div class="line"></div><div class="line">#: index.js:1</div><div class="line">msgid: &quot;trans string&quot;</div><div class="line">msgstr: &quot;&quot;</div></pre></td></tr></table></figure>
+<p>在完成上面<code>msgstr</code>的翻译文本填写后，通过执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py compilemessages</div></pre></td></tr></table></figure>
+<p>这样就会将你的翻译便以为.mo二进制文件</p>
+<p>此时只需要重启服务器就可以看到翻译后的文本了</p>
+<p>END</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://en.wikipedia.org/wiki/Internationalization_and_localization" target="_blank" rel="external">国际化与本地化</a></p>
+<p><a href="https://docs.djangoproject.com/en/1.10/topics/i18n/translation/" target="_blank" rel="external">django Internationalization</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Django/" rel="tag"># Django</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/python-input-output/" rel="next" title="python的输入输出">
+                <i class="fa fa-chevron-left"></i> python的输入输出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="willLuo" />
+          <p class="site-author-name" itemprop="name">willLuo</p>
+          <p class="site-description motion-element" itemprop="description">积跬步，至千里</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Django-web-应用国际化"><span class="nav-number">1.</span> <span class="nav-text">Django web 应用国际化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现国际化"><span class="nav-number">1.1.</span> <span class="nav-text">实现国际化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改setting-py"><span class="nav-number">1.2.</span> <span class="nav-text">修改setting.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装的所需的包"><span class="nav-number">1.3.</span> <span class="nav-text">安装的所需的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#国际化"><span class="nav-number">1.4.</span> <span class="nav-text">国际化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在python代码上的使用"><span class="nav-number">1.4.1.</span> <span class="nav-text">在python代码上的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在模板代码上的使用"><span class="nav-number">1.4.2.</span> <span class="nav-text">在模板代码上的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在javascript上的使用"><span class="nav-number">1.4.3.</span> <span class="nav-text">在javascript上的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在url上使用"><span class="nav-number">1.4.4.</span> <span class="nav-text">在url上使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地化"><span class="nav-number">1.5.</span> <span class="nav-text">本地化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">willLuo</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
