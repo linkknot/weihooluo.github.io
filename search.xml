@@ -26,6 +26,17 @@
     </entry>
     
     <entry>
+      <title><![CDATA[文件BOM头]]></title>
+      <url>http://yoursite.com/2017/03/21/file-bom-header/</url>
+      <content type="html"><![CDATA[<p>BOM在utf-8编码的文件的首部，占三个字节，用来标识这个文档属于utf-8编码，现在很多编程语言和软件都能识别bom头，但有些久不行，如php不能识别bom头，</p>
+<p>在python中创建带中文的csv文件时，我们需要使用utf-8编码，就需要在文件头写入BOM头：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> csv </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">with</span> open(<span class="string">'temp.csv'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> write_file:</div><div class="line">        csv_writer = csv.writer(write_file)</div><div class="line">        csv_writer.write(<span class="string">'\xEF\xBB\xBF'</span>)</div></pre></td></tr></table></figure>
+<p>这样生成出来的csv文件不会出现乱码问题。</p>
+<h3 id="乱码是怎么出现的"><a href="#乱码是怎么出现的" class="headerlink" title="乱码是怎么出现的"></a>乱码是怎么出现的</h3><p>乱码出现就是由于字符编码与解码的编码不一致导致的，每个符号的编码方式必须使用同样的编码方式解码才能解出真正的字符。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django实现国际化]]></title>
       <url>http://yoursite.com/2017/03/15/django-internationalization/</url>
       <content type="html"><![CDATA[<h2 id="Django-web-应用国际化"><a href="#Django-web-应用国际化" class="headerlink" title="Django web 应用国际化"></a>Django web 应用国际化</h2><p>​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。</p>
