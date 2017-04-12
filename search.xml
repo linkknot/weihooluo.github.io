@@ -4,6 +4,28 @@
   
     
     <entry>
+      <title><![CDATA[ascii_unicode_utf-8]]></title>
+      <url>http://yoursite.com/2017/03/21/ascii-unicode-utf-8/</url>
+      <content type="html"><![CDATA[<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>计算机字符编码是多种不同的标准，比较常用的是ASCII，Unicode，utf-8</p>
+<h3 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h3><p>在我们的认知中，在计算机内部，所有的信息都可以表示为一个二进制的字符串，而每个二进制位都有着0和1两种状态，ascii编码是一种基于拉丁字母的一套电脑编码系统，用于显示现代英语，扩展的EASCII则可以支持西欧语言</p>
+<p>ascii编码的使用很局限，只能用于表现26个英语字母以及相当一部分的字符。由于ascii编码使用的是后7位，前面一位置0，所以总共128个字符。</p>
+<h3 id="非ASCII编码"><a href="#非ASCII编码" class="headerlink" title="非ASCII编码"></a>非ASCII编码</h3><p>在表达其他语言时，ASCII编码就显得不足了，并能表达出其他语言的字符，例如汉子的就有10万个组，当然中文的编码GB2312使用两个字节表示一个汉字与后面讲到的多字节表示的utf-8和unicode编码是不同的</p>
+<h3 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h3><p>​    unicode编码是一种国际码，即对世界的大部分文字进行规划整理，编码，使得电脑可以使用简单的方式来显示和处理文字。Unicode编码一直在持续的更新，不断有新的字符添加进入unicode编码中，现行的很多新兴的编程语言以及现代操作系统都会使用的unicode编码</p>
+<p>​    unicode编码为了兼容原来的基本拉丁字母以及其他的编码方式，保留了256字符给IOS-8859-1标准多定义的字符，并且将大量相同的字符重复编到不同的字符码中，这样使得unicode编码与其他编码之间可以相互直接转换以及标识全半角符号</p>
+<p>​    unicode标准在2.0之后就开始向后兼容，即不删除字符，只增加字符</p>
+<h3 id="Utf-8编码"><a href="#Utf-8编码" class="headerlink" title="Utf-8编码"></a>Utf-8编码</h3><p>UTF-8字符编码是针对于unicode编码的可变长度的字符编码使用8bit来进行存储，UTF-8是unicode编码的实现，存储的长度为1-4字节，UTF-8编码已经被所有互联网协议所支持，邮件联盟要求所有的邮件都使用UTF-8编码。UTF-8编码已经被越来越文件格式所支持，现行的支持UTF-8</p>
+<p>在使用mysql数据库，创建表时，我们可以设置设置数据库的编码，当使用的UTF-8时，有两种比较常用的两种字符集：utf8_unicode_ci和utf8_general_ci，这两种基本的相似，utf8_general_ci字符集编码对某些语言的支持有一定的问题，但是utf8_general_ci会速度较快，utf8_unicode_ci会比较准确，但是时间速度会稍慢。</p>
+<p>utf-8编码的规则：</p>
+<p>​    1）对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode    码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</p>
+<p>​    2）对于n字节的符号（n&gt;1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://en.wikipedia.org/wiki/ASCII" target="_blank" rel="external">AscII wikipedia</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Unicode" target="_blank" rel="external">Unicode wikipedia</a></p>
+<p><a href="https://en.wikipedia.org/wiki/UTF-8" target="_blank" rel="external">utf-8 wikipedia</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">字符编码笔记：ASCII，Unicode和UTF-8</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django实现国际化]]></title>
       <url>http://yoursite.com/2017/03/15/django-internationalization/</url>
       <content type="html"><![CDATA[<h2 id="Django-web-应用国际化"><a href="#Django-web-应用国际化" class="headerlink" title="Django web 应用国际化"></a>Django web 应用国际化</h2><p>​    由于部门的系统升级，会导入外国用户，所以需要对系统进行国际化的配置，django作为一个开源的web服务框架，它本身是支持的国际化。</p>
