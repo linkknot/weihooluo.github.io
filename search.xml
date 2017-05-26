@@ -4,6 +4,54 @@
   
     
     <entry>
+      <title><![CDATA[ubuntu_install_ffmpeg]]></title>
+      <url>http://yoursite.com/2017/05/26/ubuntu-install-ffmpeg/</url>
+      <content type="html"><![CDATA[<h2 id="Ubuntu安装ffmpeg"><a href="#Ubuntu安装ffmpeg" class="headerlink" title="Ubuntu安装ffmpeg"></a>Ubuntu安装ffmpeg</h2><p>由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：</p>
+<ol>
+<li>直接通过apt-get安装，但是不推荐，安装的版本的会很久</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add-apt-repository ppa:kirillshkrogalev/ffmpeg-next</div><div class="line">apt-get update</div><div class="line">apt-get install ffmepg</div></pre></td></tr></table></figure>
+<ol>
+<li>自己编译，这也是重点说的。</li>
+</ol>
+<h3 id="自己编译ffmpeg"><a href="#自己编译ffmpeg" class="headerlink" title="自己编译ffmpeg"></a>自己编译ffmpeg</h3><ol>
+<li><p>下载</p>
+<p>找目录作为下载目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo mkdir ~/ffmpeg_package</div><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package</div><div class="line">git <span class="built_in">clone</span> https://git.ffmpeg.org/ffmpeg.git ffmpeg</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装需要的库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 首先安装yasm</span></div><div class="line">sudo apt-get install yasm</div><div class="line">sudo apt-get install libx264-dev</div><div class="line">sudo apt-get install libfaac-dev</div><div class="line">sudo apt-get install libmp3lame-dev</div><div class="line">sudo apt-get install libtheora-dev</div><div class="line">sudo apt-get install libvorbis-dev</div><div class="line">sudo apt-get install libxvidcore-dev</div><div class="line">sudo apt-get install libxext-dev</div><div class="line">sudo apt-get install libxfixes-dev</div><div class="line"><span class="comment"># 或者可以直接</span></div><div class="line">sudo apt-get install yasm,libx264-dev,libfaac-dev,libmp3lame-dev,libtheora-dev,libvorbis-dev,libxvidcore-dev,libxext-dev,libxfixes-dev</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis</div></pre></td></tr></table></figure>
+<p>由于不同的版本的，可能会出现报不需要添加某些库：<code>libfaac</code>，<code>x11grab</code>，所以可以使用虾面命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-libvorbis</div></pre></td></tr></table></figure>
+<p>make</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>编译完成后最后一步，将编译好的可执行复制到系统bin</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp /usr/<span class="built_in">local</span>/ffmpeg/bin/* /usr/<span class="built_in">local</span>/bin</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="end"><a href="#end" class="headerlink" title="end"></a>end</h3>]]></content>
+      
+        <categories>
+            
+            <category> 视频处理 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ubuntu </tag>
+            
+            <tag> ffmpeg </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[ascii_unicode_utf-8]]></title>
       <url>http://yoursite.com/2017/03/21/ascii-unicode-utf-8/</url>
       <content type="html"><![CDATA[<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>计算机字符编码是多种不同的标准，比较常用的是ASCII，Unicode，utf-8</p>
@@ -23,6 +71,14 @@
 <p><a href="https://en.wikipedia.org/wiki/UTF-8" target="_blank" rel="external">utf-8 wikipedia</a></p>
 <p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank" rel="external">字符编码笔记：ASCII，Unicode和UTF-8</a></p>
 ]]></content>
+      
+        
+        <tags>
+            
+            <tag> 字符编码 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -34,6 +90,20 @@
 <p>这样生成出来的csv文件不会出现乱码问题。</p>
 <h3 id="乱码是怎么出现的"><a href="#乱码是怎么出现的" class="headerlink" title="乱码是怎么出现的"></a>乱码是怎么出现的</h3><p>乱码出现就是由于字符编码与解码的编码不一致导致的，每个符号的编码方式必须使用同样的编码方式解码才能解出真正的字符。</p>
 ]]></content>
+      
+        <categories>
+            
+            <category> 其他 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 编码 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -85,19 +155,35 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># urls.py</span></div><div class="line">urlpatterns += i18n_patterns(</div><div class="line">    url(_(<span class="string">r'^testurlname/'</span>), include(<span class="string">'testapp.urls'</span>)),</div><div class="line">)</div></pre></td></tr></table></figure>
 <p>在有以上的需要翻译的文本后</p>
 <p>我们需要执行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py makemessages -l zh_hans</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py makemessages -l zh_hans</div></pre></td></tr></table></figure>
 <p>执行命令之后django就会根据setting.py中<code>LOCALE_PATHS</code>生成本地化文件django.po，或许会问为什么语言代码不是应该是<code>zh-hans</code>吗？为什这里就变成了<code>zh_hans</code>。对！！！你猜对了，这是一个坑，就是django中的本地化文件不能使用<code>-</code>，所以要使用<code>_</code>来替代<code>-</code>,</p>
 <p>这里会生成两个po文件，一个是<code>django.po</code>，一个是<code>djangojs.po</code>，文件路径<code>${LOCALE_PATHS}/locale/zh_hans/django.po</code>,<code>${LOCALE_PATHS}/locale/zh_hans/djangojs.po</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"># django.po</div><div class="line"># SOME DESCRIPTIVE TITLE.</div><div class="line"># Copyright (C) YEAR THE PACKAGE&apos;S COPYRIGHT HOLDER</div><div class="line"># This file is distributed under the same license as the PACKAGE package.</div><div class="line"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</div><div class="line">#</div><div class="line">msgid &quot;&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line">&quot;Project-Id-Version: Medusa\n&quot;</div><div class="line">&quot;Report-Msgid-Bugs-To: \n&quot;</div><div class="line">&quot;POT-Creation-Date: 2017-03-17 18:38+0800\n&quot;</div><div class="line">&quot;PO-Revision-Date: 2017-03-17 17:47+0800\n&quot;</div><div class="line">&quot;Last-Translator: \n&quot;</div><div class="line">&quot;Language-Team: \n&quot;</div><div class="line">&quot;Language: zh_CN\n&quot;</div><div class="line">&quot;MIME-Version: 1.0\n&quot;</div><div class="line">&quot;Content-Type: text/plain; charset=UTF-8\n&quot;</div><div class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</div><div class="line">&quot;Plural-Forms: nplurals=1; plural=0;\n&quot;</div><div class="line">&quot;X-Generator: Poedit 1.8.12\n&quot;</div><div class="line"></div><div class="line">#: testapp.view.py:3</div><div class="line">msgid &quot;Welcome to my site.&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line"></div><div class="line">#: index.html:3</div><div class="line">msgid: &quot;trans string&quot;</div><div class="line">msgstr: &quot;&quot;</div><div class="line"></div><div class="line">#: url.py:3</div><div class="line">msgid: &quot;r&apos;^testurlname/&apos;&quot;</div><div class="line">msgstr: &quot;&quot;</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># djangojs.po</div><div class="line"># SOME DESCRIPTIVE TITLE.</div><div class="line"># Copyright (C) YEAR THE PACKAGE&apos;S COPYRIGHT HOLDER</div><div class="line"># This file is distributed under the same license as the PACKAGE package.</div><div class="line"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</div><div class="line">#</div><div class="line">#, fuzzy</div><div class="line">msgid &quot;&quot;</div><div class="line">msgstr &quot;&quot;</div><div class="line">&quot;Project-Id-Version: PACKAGE VERSION\n&quot;</div><div class="line">&quot;Report-Msgid-Bugs-To: \n&quot;</div><div class="line">&quot;POT-Creation-Date: 2017-03-17 15:39+0800\n&quot;</div><div class="line">&quot;PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n&quot;</div><div class="line">&quot;Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n&quot;</div><div class="line">&quot;Language-Team: LANGUAGE &lt;LL@li.org&gt;\n&quot;</div><div class="line">&quot;Language: \n&quot;</div><div class="line">&quot;MIME-Version: 1.0\n&quot;</div><div class="line">&quot;Content-Type: text/plain; charset=UTF-8\n&quot;</div><div class="line">&quot;Content-Transfer-Encoding: 8bit\n&quot;</div><div class="line">&quot;Plural-Forms: nplurals=1; plural=0;\n&quot;</div><div class="line"></div><div class="line">#: index.js:1</div><div class="line">msgid: &quot;trans string&quot;</div><div class="line">msgstr: &quot;&quot;</div></pre></td></tr></table></figure>
 <p>在完成上面<code>msgstr</code>的翻译文本填写后，通过执行命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py compilemessages</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py compilemessages</div></pre></td></tr></table></figure>
 <p>这样就会将你的翻译便以为.mo二进制文件</p>
 <p>此时只需要重启服务器就可以看到翻译后的文本了</p>
 <p>END</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://en.wikipedia.org/wiki/Internationalization_and_localization" target="_blank" rel="external">国际化与本地化</a></p>
 <p><a href="https://docs.djangoproject.com/en/1.10/topics/i18n/translation/" target="_blank" rel="external">django Internationalization</a></p>
 ]]></content>
+      
+        <categories>
+            
+            <category> Python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -121,6 +207,22 @@
 <p><a href="https://docs.python.org/2.7/library/functions.html#input" target="_blank" rel="external">input()</a></p>
 <p><a href="https://docs.python.org/2.7/library/functions.html#raw_input" target="_blank" rel="external">raw_input()</a></p>
 ]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> I/O </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -230,6 +332,26 @@
 <h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>cookies,localStorage,sessionStorage都是为了让用户有更好的使用体验和让开发者有更好的方式，但这些存储方式，都不适合存储敏感数据，而且客户端以及服务端需要对数据进行严格的校验，以防出现潜在的攻击方式。但是，说到底，没有永远的安全，web的安全需要不断的提升。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank" rel="external">http cookie</a><br><a href="https://en.wikipedia.org/wiki/Web_storage" target="_blank" rel="external">webstorage</a><br><a href="http://jerryzou.com/posts/cookie-and-web-storage/" target="_blank" rel="external">详说 Cookie, LocalStorage 与 SessionStorage</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">Window.localStorage</a><br><a href="http://www.cnblogs.com/Darren_code/archive/2011/11/24/Cookie.html" target="_blank" rel="external">JavaScript操作cookie</a></p>
 ]]></content>
+      
+        <categories>
+            
+            <category> HTML </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> HTML5 </tag>
+            
+            <tag> coookies </tag>
+            
+            <tag> localStorage </tag>
+            
+            <tag> sessionStorage </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -242,6 +364,20 @@
 <p>2016 一个寻常年，集读书，运动，工作与一身的一年，还是不错的开始，期待2017能更好的做好自己。</p>
 <p><code>way hrad and long, but i will still go forward</code></p>
 ]]></content>
+      
+        <categories>
+            
+            <category> 回头看 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 总结 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -256,6 +392,24 @@
 <h4 id="丽江"><a href="#丽江" class="headerlink" title="丽江"></a>丽江</h4><p>好地方，就是在很适合跟妹子一起过来，捂脸跑</p>
 <h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>写着写着就没什么好写的，不太喜欢写流水账，随后有唯美图</p>
 ]]></content>
+      
+        <categories>
+            
+            <category> 走世界 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 旅游 </tag>
+            
+            <tag> 云南 </tag>
+            
+            <tag> 流水账 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -290,6 +444,22 @@
 <p>匆匆忙忙的过了武大， 去了东湖，时间少，加上走了挺久，有点累。晚上去吃完东西就再再光谷那边逛了一下。</p>
 <h3 id="终语"><a href="#终语" class="headerlink" title="终语"></a>终语</h3><p>读万卷书不如走万里路，出走行走的收获也是很多的。出去走走，理一下思绪。keep going!!!!</p>
 ]]></content>
+      
+        <categories>
+            
+            <category> 走世界 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 旅游 </tag>
+            
+            <tag> 武汉 </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -314,6 +484,22 @@
 </li>
 </ol>
 ]]></content>
+      
+        <categories>
+            
+            <category> 技术杂谈 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> blog </tag>
+            
+        </tags>
+        
     </entry>
     
     <entry>
@@ -348,6 +534,22 @@
 </li>
 </ol>
 ]]></content>
+      
+        <categories>
+            
+            <category> ubuntu </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> ssh </tag>
+            
+            <tag> ubuntu </tag>
+            
+        </tags>
+        
     </entry>
     
   
