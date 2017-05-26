@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[ubuntu_install_ffmpeg]]></title>
+      <title><![CDATA[Ubuntu安装ffmpeg]]></title>
       <url>http://yoursite.com/2017/05/26/ubuntu-install-ffmpeg/</url>
       <content type="html"><![CDATA[<h2 id="Ubuntu安装ffmpeg"><a href="#Ubuntu安装ffmpeg" class="headerlink" title="Ubuntu安装ffmpeg"></a>Ubuntu安装ffmpeg</h2><p>由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：</p>
 <ol>
@@ -52,7 +52,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[ascii_unicode_utf-8]]></title>
+      <title><![CDATA[字符编码(ascii,unicode,utf-8)]]></title>
       <url>http://yoursite.com/2017/03/21/ascii-unicode-utf-8/</url>
       <content type="html"><![CDATA[<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>计算机字符编码是多种不同的标准，比较常用的是ASCII，Unicode，utf-8</p>
 <h3 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h3><p>在我们的认知中，在计算机内部，所有的信息都可以表示为一个二进制的字符串，而每个二进制位都有着0和1两种状态，ascii编码是一种基于拉丁字母的一套电脑编码系统，用于显示现代英语，扩展的EASCII则可以支持西欧语言</p>
@@ -544,9 +544,9 @@
         
         <tags>
             
-            <tag> ssh </tag>
-            
             <tag> ubuntu </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
         
