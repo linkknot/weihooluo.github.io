@@ -59,9 +59,9 @@
         
         <tags>
             
-            <tag> 视频处理 </tag>
-            
             <tag> python </tag>
+            
+            <tag> 视频处理 </tag>
             
         </tags>
         
@@ -235,7 +235,7 @@
       
         <categories>
             
-            <category> Python </category>
+            <category> python </category>
             
         </categories>
         
@@ -244,7 +244,7 @@
             
             <tag> Django </tag>
             
-            <tag> Python </tag>
+            <tag> python </tag>
             
         </tags>
         
@@ -608,9 +608,9 @@
         
         <tags>
             
-            <tag> ubuntu </tag>
-            
             <tag> ssh </tag>
+            
+            <tag> ubuntu </tag>
             
         </tags>
         
