@@ -4,9 +4,15 @@
   
     
     <entry>
-      <title><![CDATA[requests下载文件]]></title>
+      <title><![CDATA[python下载视频的方式]]></title>
       <url>http://yoursite.com/2017/05/27/rquests-download-file-python/</url>
-      <content type="html"><![CDATA[<h2 id="Request下载文件"><a href="#Request下载文件" class="headerlink" title="Request下载文件"></a>Request下载文件</h2><p>近期有需要爬取视频进行分析，涉及到下载视频文件，在下载视频文件的方法中，我们选取了使用<code>requests.get()</code>来下载视频，这也是一种十分常用的方式，以下是主要代码</p>
+      <content type="html"><![CDATA[<p>暂时我们使用的有以下两种视频的下载方式：</p>
+<ol>
+<li>request下载</li>
+<li>ffmpeg下载</li>
+</ol>
+<p>以下将对这种方式进行介绍</p>
+<h2 id="Request下载文件"><a href="#Request下载文件" class="headerlink" title="Request下载文件"></a>Request下载文件</h2><p>近期有需要爬取视频进行分析，涉及到下载视频文件，在下载视频文件的方法中，我们选取了使用<code>requests.get()</code>来下载视频，这也是一种十分常用的方式，以下是主要代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">down_video</span><span class="params">(arg_url, arg_save_path)</span>:</span></div><div class="line">    response = requests.get(arg_url, stream=<span class="keyword">True</span>, timeout=(<span class="number">5</span>,<span class="number">10</span>))</div><div class="line">    <span class="keyword">with</span> open(arg_save_path, <span class="string">'wb'</span>) <span class="keyword">as</span> video_file</div><div class="line">	<span class="keyword">for</span> chunk <span class="keyword">in</span> response.iter_content(chunk_size=<span class="number">1024</span>):</div><div class="line">        <span class="keyword">if</span> chunk:</div><div class="line">            video_file.write(chunk)</div></pre></td></tr></table></figure>
 <h3 id="timeout-5-10"><a href="#timeout-5-10" class="headerlink" title="timeout=(5,10)"></a>timeout=(5,10)</h3><p>通过以上的代码的方式就能将视频下载，<code>requests.get()</code>的默认<code>timeout</code>是<code>None</code>，如果不设置timeout，连接建立的时候就会一直等待。</p>
 <p>我们需要可以对请求进行timeout的设置，设置方法是<code>timeout=3</code>，通过这样的设置，就能设置建立连接的timeout。</p>
@@ -17,8 +23,30 @@
 <p>当stream=True时，当你进行网络请求后，推迟下载响应体直到访问 <code>Response.content</code> 属性</p>
 <h3 id="chunk-size-1024"><a href="#chunk-size-1024" class="headerlink" title="chunk_size=1024"></a>chunk_size=1024</h3><p>在读取文件时，使用一块块进行读取，这是需要设置缓冲区的大小，缓冲区的大小一般可以设为1024B，即1MB，对于资源较小的机器可以设置稍小。</p>
 <h2 id="还有一种非python库的下载方式FFMPEG"><a href="#还有一种非python库的下载方式FFMPEG" class="headerlink" title="还有一种非python库的下载方式FFMPEG"></a>还有一种非python库的下载方式FFMPEG</h2><p>FFmpeg在视频处理方面时非常好的，多种复杂的使用</p>
-<p>下面使用在python中调用ffmpeg下载的方法</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import subprocess</div><div class="line"></div><div class="line">def download_video_ffmpeg(arg_url,arg_save_path)</div><div class="line">cmd = [</div><div class="line">    'ffmpeg',</div><div class="line">    '-i',]</div></pre></td></tr></table></figure>
+<p>下面使用在python中调用ffmpeg下载的方法，下载10秒</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> subprocess</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_video_ffmpeg</span><span class="params">(arg_url,arg_save_path)</span>:</span></div><div class="line">  cmd = [</div><div class="line">      <span class="string">'ffmpeg'</span>,</div><div class="line">      <span class="string">'-i'</span>,</div><div class="line">      <span class="string">'-s'</span>, <span class="string">'00:00:10.000'</span></div><div class="line">      arg_url,</div><div class="line">      arg_save_path</div><div class="line">  ]</div><div class="line">  child = subprocess.Popne(cmd)</div><div class="line">  child.wait()</div></pre></td></tr></table></figure>
+<p>经测试使用，ffmpeg下载的视频的画质较差，reuqest.get()视频的画质较好</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">下载方式</th>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">requests.get()</td>
+<td style="text-align:left">画质较好</td>
+<td style="text-align:left">不能很好控制视频采集时间，会出现丢失视频持续时间，视频帧率，视频码率</td>
+</tr>
+<tr>
+<td style="text-align:center">ffmepg</td>
+<td style="text-align:left">能够控制下载视频时间，并能保存好视频信息</td>
+<td style="text-align:left">画质较差</td>
+</tr>
+</tbody>
+</table>
 <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://docs.python-requests.org/zh_CN/latest/user/advanced.html#timeout" target="_blank" rel="external">超时(timeout)</a></p>
 <h3 id="end"><a href="#end" class="headerlink" title="end"></a>end</h3>]]></content>
       
