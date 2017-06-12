@@ -84,17 +84,17 @@
 
 
 
-<meta name="description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很久  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
+<meta name="description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很旧  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
 <meta name="keywords" content="ubuntu,ffmpeg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu安装ffmpeg">
 <meta property="og:url" content="http://yoursite.com/2017/05/26/ubuntu-install-ffmpeg/index.html">
 <meta property="og:site_name" content="起个名字好难">
-<meta property="og:description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很久  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
-<meta property="og:updated_time" content="2017-05-26T10:21:37.000Z">
+<meta property="og:description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很旧  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
+<meta property="og:updated_time" content="2017-06-12T06:42:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu安装ffmpeg">
-<meta name="twitter:description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很久  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
+<meta name="twitter:description" content="Ubuntu安装ffmpeg由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：  直接通过apt-get安装，但是不推荐，安装的版本的会很旧  123add-apt-repository ppa:kirillshkrogalev/ffmpeg-nextapt-get updateapt-get install ffmepg  自己编译，这也是重点说的。  自己编译ff">
 
 
 
@@ -384,7 +384,7 @@
       
         <h2 id="Ubuntu安装ffmpeg"><a href="#Ubuntu安装ffmpeg" class="headerlink" title="Ubuntu安装ffmpeg"></a>Ubuntu安装ffmpeg</h2><p>由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：</p>
 <ol>
-<li>直接通过apt-get安装，但是不推荐，安装的版本的会很久</li>
+<li>直接通过apt-get安装，但是不推荐，安装的版本的会很旧</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add-apt-repository ppa:kirillshkrogalev/ffmpeg-next</div><div class="line">apt-get update</div><div class="line">apt-get install ffmepg</div></pre></td></tr></table></figure>
 <ol>
@@ -400,7 +400,7 @@
 </li>
 <li><p>编译</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis</div></pre></td></tr></table></figure>
-<p>由于不同的版本的，可能会出现报不需要添加某些库：<code>libfaac</code>，<code>x11grab</code>，所以可以使用虾面命令</p>
+<p>由于不同的版本的要求，可能会出现报./configure中没有某个选项，这时候需要删除某些库，下面是删除<code>libfaac</code>，<code>x11grab</code>，所以可以使用下面的命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-libvorbis</div></pre></td></tr></table></figure>
 <p>make</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
@@ -522,7 +522,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -539,7 +539,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

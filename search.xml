@@ -4,6 +4,26 @@
   
     
     <entry>
+      <title><![CDATA[python多线程的实现]]></title>
+      <url>http://yoursite.com/2017/06/07/python-thread-achieve/</url>
+      <content type="html"></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 多线程 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[python下载视频的方式]]></title>
       <url>http://yoursite.com/2017/05/27/rquests-download-file-python/</url>
       <content type="html"><![CDATA[<p>暂时我们使用的有以下两种视频的下载方式：</p>
@@ -72,7 +92,7 @@
       <url>http://yoursite.com/2017/05/26/ubuntu-install-ffmpeg/</url>
       <content type="html"><![CDATA[<h2 id="Ubuntu安装ffmpeg"><a href="#Ubuntu安装ffmpeg" class="headerlink" title="Ubuntu安装ffmpeg"></a>Ubuntu安装ffmpeg</h2><p>由于视频处理需要，需要在ubuntu上部署ffmpeg，整体来说流程有以下方法：</p>
 <ol>
-<li>直接通过apt-get安装，但是不推荐，安装的版本的会很久</li>
+<li>直接通过apt-get安装，但是不推荐，安装的版本的会很旧</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add-apt-repository ppa:kirillshkrogalev/ffmpeg-next</div><div class="line">apt-get update</div><div class="line">apt-get install ffmepg</div></pre></td></tr></table></figure>
 <ol>
@@ -88,7 +108,7 @@
 </li>
 <li><p>编译</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libfaac --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-x11grab --enable-libvorbis</div></pre></td></tr></table></figure>
-<p>由于不同的版本的，可能会出现报不需要添加某些库：<code>libfaac</code>，<code>x11grab</code>，所以可以使用虾面命令</p>
+<p>由于不同的版本的要求，可能会出现报./configure中没有某个选项，这时候需要删除某些库，下面是删除<code>libfaac</code>，<code>x11grab</code>，所以可以使用下面的命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/ffmpeg_package/ffmpeg</div><div class="line">sudo ./configure --prefix=/usr/<span class="built_in">local</span>/ffmpeg --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-pthreads --enable-libmp3lame --enable-libtheora --enable-libx264 --enable-libxvid --enable-libvorbis</div></pre></td></tr></table></figure>
 <p>make</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
