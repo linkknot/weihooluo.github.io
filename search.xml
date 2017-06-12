@@ -4,26 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[python多线程的实现]]></title>
-      <url>http://yoursite.com/2017/06/07/python-thread-achieve/</url>
-      <content type="html"></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 多线程 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[python下载视频的方式]]></title>
       <url>http://yoursite.com/2017/05/27/rquests-download-file-python/</url>
       <content type="html"><![CDATA[<p>暂时我们使用的有以下两种视频的下载方式：</p>
@@ -262,9 +242,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -628,9 +608,9 @@
         
         <tags>
             
-            <tag> ssh </tag>
-            
             <tag> ubuntu </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
         
