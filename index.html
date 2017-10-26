@@ -286,6 +286,192 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/25/macos-restart-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="willLuo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="无名氏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/25/macos-restart-error/" itemprop="url">macOS sierrra重启卡旋转菊花</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-25T15:10:16+08:00">
+                2017-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/开发环境/" itemprop="url" rel="index">
+                    <span itemprop="name">开发环境</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>近期在尝试重启macbook pro的时候卡在旋转菊花的地方，系统久久不能重启，只能通过强制关机，然后开机才能进入系统，毕竟mac很少重启，所以这个问题比较迟发现</p>
+<h3 id="分析最近操作"><a href="#分析最近操作" class="headerlink" title="分析最近操作"></a>分析最近操作</h3><ol>
+<li>难道做了什么骚操作导致系统文件的权限出现问题</li>
+<li>最近一般就重新安装ffmpeg，为啥要重装？因为系统macOS更新后，用homeberw安装的ffmpeg在用的时候就出现无法加载包的问题</li>
+</ol>
+<h3 id="发现问题过程"><a href="#发现问题过程" class="headerlink" title="发现问题过程"></a>发现问题过程</h3><ol>
+<li><p>第一个了解到的可能的问题是：系统文件的权限出现了问题</p>
+<p>可能的解决方式：有没有检查系统文件权限的工具</p>
+<ol>
+<li>检测的工具有，但在macOS sierra上已经取消了，macOS sierra对系统文件的权限进行了保护</li>
+<li>那就应该没系统文件权限的事了</li>
+</ol>
+</li>
+<li><p>系统更新后出现一个与软件的兼容问题，导致系统无法正常重启</p>
+<p>这个也是一个可能，因为出现过ffmpeg更新后不能使用，虽然原因不明</p>
+<p>暂且认为可能升级系统导致</p>
+<p>在后续的google中，大部分的问题都是指向系统文件权限，之后<a href="https://www.zhihu.com/question/50940249" target="_blank" rel="external">知乎</a>上看到是系统的更新后的mac的某些服务与mac关机发生了冲突，导致无法关机，答主同样也是mysql服务无法停止</p>
+</li>
+</ol>
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><ol>
+<li>尝试在偏好设置停止mysql服务，结果是卡死，无法关闭</li>
+<li>通过<code>ps -ax | grep mysql</code>找出所有mysql的进程，并且把他们kill掉，mysql服务终于停了</li>
+<li>卸载mysql，重新安装，之前是使用mysql安装包安装，之后型通过brew进行安装，较少不必要的问题</li>
+<li>通过brew重新安装</li>
+</ol>
+<h3 id="卸载mysql"><a href="#卸载mysql" class="headerlink" title="卸载mysql"></a>卸载mysql</h3><ol>
+<li><p>使用brew安装</p>
+<ol>
+<li><code>`brew uninstall mysql</code> 或者 <code>brew remove mysql</code></li>
+</ol>
+</li>
+<li><p>使用安装包安装</p>
+<p>到指定的目录下删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo rm /usr/<span class="built_in">local</span>/mysql</div><div class="line">sudo rm -rf /usr/<span class="built_in">local</span>/mysql*</div><div class="line">sudo rm -rf /Library/StartupItems/MySQLCOM</div><div class="line">sudo rm -rf /Library/PreferencePanes/My*</div><div class="line">rm -rf ~/Library/PreferencePanes/My*</div><div class="line">sudo rm -rf /Library/Receipts/mysql*</div><div class="line">sudo rm -rf /Library/Receipts/MySQL*</div><div class="line">sudo rm -rf /var/db/receipts/com.mysql.*</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>为了保证下一次安装干净，建议还是检查一下以上的目录，包括</p>
+<ul>
+<li>/usr/local/Cellar 里的mysql文件</li>
+<li>/usr/local/var 里的mysql文件</li>
+<li>/tmp 里的mysql.sock, mysql.sock.lock, my.cnf文件</li>
+<li>pid文件和err文件都在/usr/local/var/mysql里确保删除了</li>
+<li>brew安装的安装包存储在/usr/local/Library/Cache/Homebrew也可以一并删除</li>
+<li>执行brew cleanup</li>
+</ul>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p><code>brew install mysql</code></p>
+<p>安装的时候会出现各种选项，让你选择，按照你的实际使用选择就可以，brew 会提示你需要执行一条命令设置密码的，一切安装提示做就可以</p>
+<p>完成安装后：</p>
+<p>通过<code>$ mysql.server start</code>就能启动mysql</p>
+<p>其他选项还有<code>{start|stop|restart|reload|force-reload|status}</code></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://blog.csdn.net/sarahhuangzht/article/details/51508112" target="_blank" rel="external">Mac Pro下卸载安装Mysql</a></p>
+<p><a href="https://www.zhihu.com/question/50940249" target="_blank" rel="external">macOS Sierra 更新之后无法正常关机或重启</a></p>
+<p><a href="https://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-mac-os-x" target="_blank" rel="external">How do you uninstall MySQL from Mac OS X?</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/07/python-thread-achieve/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1771,147 +1957,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/21/yunnan-trip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="willLuo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="无名氏">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/07/21/yunnan-trip/" itemprop="url">去到一个据说宜居的地方 --- 云南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-21T09:50:43+08:00">
-                2016-07-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/走世界/" itemprop="url" rel="index">
-                    <span itemprop="name">走世界</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一直都说云南是一个旅游的好地方，很适合居住。所以一直有想去云南旅游的想法，刚好碰上端午节，其他人有假期，就一起来一个说走就走的旅行。马上定下了去云南昆明的火车票。Z211，广州经过广西直达昆明。</p>
-<h3 id="行程"><a href="#行程" class="headerlink" title="行程"></a>行程</h3><h4 id="广州到昆明"><a href="#广州到昆明" class="headerlink" title="广州到昆明"></a>广州到昆明</h4><p>广州火车站虽然看似很大，但是我们去到的时候也有挺多人在准备进站，走入帐篷底下进站，是一个漏斗形进站口，感觉是个坑啊，这种漏斗型的进站口不会最容易导致堵塞么？想想在春运是整个广场都是人的话，该是一个多么辛苦。为了生活，去到一个陌生的城市，为了家人，挨肩擦背在火车站挤火车回家。<br>火车启动，在晚上醒过了几次，都是在黑夜中，一个城市的黑夜很美，经过广西南宁，外面下着点点的小雨，火车里面的人，大概很多都睡了吧，作为一个互联网从业的一份子，似乎纵有一种很晚睡的习惯，不知是不是子啊创新班中习惯了下来，总要很晚才能睡着。火车站的大叔在为火车补水，火车停了大概20分钟，然后就继续上路，火车在铁轨上走，对于一个第一次搭火车的人来说，一切都是新奇的，行驶中的火车没有想象中嘈杂，深夜行驶的火车还是挺安静的。<br>早上醒来,已经在云南省内，火车一次又一次的闯过隧道，车窗外的风景一直在变，青山，绿水，一切尽收眼底，以前书上所说的青山，绿水现在有机会可以看到，自己是很是兴奋。一直生活在城镇，也很少见到这种青山绿水。河面在太阳光的照耀下变得金光闪闪。距离终点站越来越近，很多人也醒了。活动在火车中，但相对来说还是挺安静。每个城市都有其不同的特点的，在火车就能看到路途上的东西。<br>下了火车，出了车站，过马路时没有斑马线的红绿灯。双4车道的马路也没有斑马线的红绿灯，也没有交警协助控制人流。每个城市还是有不同的地方。去了昆明师范大学，学校比较小，但是同样是有林荫的校道，好羡慕。</p>
-<h4 id="昆明到大理"><a href="#昆明到大理" class="headerlink" title="昆明到大理"></a>昆明到大理</h4><p>第二天就起来就搭了大巴去大理，4个小时的车程，并没有晕车的症状，不知道是气候问题还是我真的变得可以搭车了，并不清楚。不能搭车的人~~，表示搭车是一件很辛苦的事。可是去旅行很多时候都要搭车。经过4个小时车程，来到一个新的城市—大理。下车就被卖猪仔，带到一家客栈，不过价格确实很便宜，环境还挺不错的。放下行李在古城里面闲逛，石板路，中间一条小溪。环境有种说不出的好。还有两只拉布拉多汪星人。6个人在古城里面瞎逛，午餐没有吃，所以晚餐吃得比较早，试了一下烤肉，烤肉做的并不是好吃，烤菜还好。味道都是比较重，都是比较咸的。吃完饭后继续瞎逛，买了鲜花饼，很香的玫瑰香，一个一个都订了要的鲜花饼。在隔离的一家中看到一个驻店歌手收，店里的人都在很享受地听着驻店歌手的歌。有时想，其实生活也可以很简单，一把吉他或许就能走天下了。每个人都会有自己不同的最求，走自己想走的路就对了。大理差不多7点才开始变黑，整个时间活动都推迟了。有更多的白天的时间。晚上回客栈，去了宵夜，喝一杯玫瑰酒，很香玫瑰味，6个人又一起买了这个玫瑰酒。</p>
-<h4 id="苍山之行"><a href="#苍山之行" class="headerlink" title="苍山之行"></a>苍山之行</h4><p>一个可以乘坐缆车的地方，到达高高的山顶，海拔3900+，山上很凉爽，风景也非常好。爬上又爬下，沿着山顶的路走了很久，很喜欢这个地方，空气又好，又有凉爽的天气，并不像广州那样的闷热。还有一个就是站得高，看得远。由于时间很赶，走完后就直接搭缆车下来。去到山下天龙八部影城还下起了太阳雨，下雨的使得这个景点更加的好看，有一种不知道怎么说的美。为了躲雨走到了一个挂满心愿木板的房子下，每块木板都写上了每个人对自己的生活的期待，看着别人的愿望，觉得都很是美好。希望每个人的生活都能过得很好。回到客栈后，又去古城里面买了一小品玫瑰酒，回到客栈中坐在藤椅上，一手是玫瑰酒，一手是手机，很是舒适，就喜欢的这种静静的坐着，在hea的生活。晚上定了回去的机票。看着机票又577变成677，好可惜啊，快一点就能577啦，便宜100软妹币吖。</p>
-<h4 id="双廊"><a href="#双廊" class="headerlink" title="双廊"></a>双廊</h4><p>就有在逛逛啊，随便走，围着洱海在汽车</p>
-<h4 id="香格里拉"><a href="#香格里拉" class="headerlink" title="香格里拉"></a>香格里拉</h4><p>上去有点坑，就是在那边逛逛，然后看了一下赛马场比赛</p>
-<h4 id="丽江"><a href="#丽江" class="headerlink" title="丽江"></a>丽江</h4><p>好地方，就是在很适合跟妹子一起过来，捂脸跑</p>
-<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>写着写着就没什么好写的，不太喜欢写流水账，随后有唯美图</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1961,7 +2006,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1972,7 +2017,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1983,7 +2028,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

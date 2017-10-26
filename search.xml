@@ -4,6 +4,79 @@
   
     
     <entry>
+      <title><![CDATA[macOS sierrra重启卡旋转菊花]]></title>
+      <url>http://yoursite.com/2017/10/25/macos-restart-error/</url>
+      <content type="html"><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>近期在尝试重启macbook pro的时候卡在旋转菊花的地方，系统久久不能重启，只能通过强制关机，然后开机才能进入系统，毕竟mac很少重启，所以这个问题比较迟发现</p>
+<h3 id="分析最近操作"><a href="#分析最近操作" class="headerlink" title="分析最近操作"></a>分析最近操作</h3><ol>
+<li>难道做了什么骚操作导致系统文件的权限出现问题</li>
+<li>最近一般就重新安装ffmpeg，为啥要重装？因为系统macOS更新后，用homeberw安装的ffmpeg在用的时候就出现无法加载包的问题</li>
+</ol>
+<h3 id="发现问题过程"><a href="#发现问题过程" class="headerlink" title="发现问题过程"></a>发现问题过程</h3><ol>
+<li><p>第一个了解到的可能的问题是：系统文件的权限出现了问题</p>
+<p>可能的解决方式：有没有检查系统文件权限的工具</p>
+<ol>
+<li>检测的工具有，但在macOS sierra上已经取消了，macOS sierra对系统文件的权限进行了保护</li>
+<li>那就应该没系统文件权限的事了</li>
+</ol>
+</li>
+<li><p>系统更新后出现一个与软件的兼容问题，导致系统无法正常重启</p>
+<p>这个也是一个可能，因为出现过ffmpeg更新后不能使用，虽然原因不明</p>
+<p>暂且认为可能升级系统导致</p>
+<p>在后续的google中，大部分的问题都是指向系统文件权限，之后<a href="https://www.zhihu.com/question/50940249" target="_blank" rel="external">知乎</a>上看到是系统的更新后的mac的某些服务与mac关机发生了冲突，导致无法关机，答主同样也是mysql服务无法停止</p>
+</li>
+</ol>
+<h3 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h3><ol>
+<li>尝试在偏好设置停止mysql服务，结果是卡死，无法关闭</li>
+<li>通过<code>ps -ax | grep mysql</code>找出所有mysql的进程，并且把他们kill掉，mysql服务终于停了</li>
+<li>卸载mysql，重新安装，之前是使用mysql安装包安装，之后型通过brew进行安装，较少不必要的问题</li>
+<li>通过brew重新安装</li>
+</ol>
+<h3 id="卸载mysql"><a href="#卸载mysql" class="headerlink" title="卸载mysql"></a>卸载mysql</h3><ol>
+<li><p>使用brew安装</p>
+<ol>
+<li><code>`brew uninstall mysql</code> 或者 <code>brew remove mysql</code></li>
+</ol>
+</li>
+<li><p>使用安装包安装</p>
+<p>到指定的目录下删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo rm /usr/<span class="built_in">local</span>/mysql</div><div class="line">sudo rm -rf /usr/<span class="built_in">local</span>/mysql*</div><div class="line">sudo rm -rf /Library/StartupItems/MySQLCOM</div><div class="line">sudo rm -rf /Library/PreferencePanes/My*</div><div class="line">rm -rf ~/Library/PreferencePanes/My*</div><div class="line">sudo rm -rf /Library/Receipts/mysql*</div><div class="line">sudo rm -rf /Library/Receipts/MySQL*</div><div class="line">sudo rm -rf /var/db/receipts/com.mysql.*</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>为了保证下一次安装干净，建议还是检查一下以上的目录，包括</p>
+<ul>
+<li>/usr/local/Cellar 里的mysql文件</li>
+<li>/usr/local/var 里的mysql文件</li>
+<li>/tmp 里的mysql.sock, mysql.sock.lock, my.cnf文件</li>
+<li>pid文件和err文件都在/usr/local/var/mysql里确保删除了</li>
+<li>brew安装的安装包存储在/usr/local/Library/Cache/Homebrew也可以一并删除</li>
+<li>执行brew cleanup</li>
+</ul>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p><code>brew install mysql</code></p>
+<p>安装的时候会出现各种选项，让你选择，按照你的实际使用选择就可以，brew 会提示你需要执行一条命令设置密码的，一切安装提示做就可以</p>
+<p>完成安装后：</p>
+<p>通过<code>$ mysql.server start</code>就能启动mysql</p>
+<p>其他选项还有<code>{start|stop|restart|reload|force-reload|status}</code></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://blog.csdn.net/sarahhuangzht/article/details/51508112" target="_blank" rel="external">Mac Pro下卸载安装Mysql</a></p>
+<p><a href="https://www.zhihu.com/question/50940249" target="_blank" rel="external">macOS Sierra 更新之后无法正常关机或重启</a></p>
+<p><a href="https://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-mac-os-x" target="_blank" rel="external">How do you uninstall MySQL from Mac OS X?</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发环境 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> macos </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[python多线程的实现]]></title>
       <url>http://yoursite.com/2017/06/07/python-thread-achieve/</url>
       <content type="html"><![CDATA[<p>​    在程序开发中，多任务的完成可以有多进程完成，也可以同通过单进程内的多线程完成，进程与线程的区别在这里就不再细说</p>
@@ -299,9 +372,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
